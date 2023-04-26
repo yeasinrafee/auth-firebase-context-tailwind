@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Login = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, logInWithGoogle } = useContext(AuthContext);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -21,6 +21,18 @@ const Login = () => {
 
     form.reset();
   };
+
+  const handleGoogle = () => {
+    logInWithGoogle()
+      .then((result) => {
+        const loggedIn = result.user;
+        console.log(loggedIn);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:gap-14">
@@ -65,6 +77,11 @@ const Login = () => {
               <Link to="/register">New to authentication? register</Link>
             </div>
           </form>
+          <div>
+            <button onClick={handleGoogle} className="btn btn-primary">
+              Google
+            </button>
+          </div>
         </div>
       </div>
     </div>
